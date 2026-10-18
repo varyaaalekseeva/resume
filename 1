@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Варвара Алексеева — технический специалист GetCourse и Salebot</title>
+<meta name="description" content="Настраиваю GetCourse, чат-ботов и воронки для онлайн-школ и экспертов. Пермь, МСК+2.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800&family=Onest:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f6fa; --surface:#ffffff; --ink:#13202e; --muted:#51606f; --line:#d8e0e9;
+  --accent:#1f6fd6; --accent-ink:#ffffff; --ok:#12805c; --ok-bg:#dff3ea; --chip:#e6eef8;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1721; --surface:#16222f; --ink:#e8eef5; --muted:#9fb0c1; --line:#26364a;
+    --accent:#5aa2ff; --accent-ink:#08121d; --ok:#4cd3a1; --ok-bg:#12372d; --chip:#1d2d40;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1721; --surface:#16222f; --ink:#e8eef5; --muted:#9fb0c1; --line:#26364a;
+  --accent:#5aa2ff; --accent-ink:#08121d; --ok:#4cd3a1; --ok-bg:#12372d; --chip:#1d2d40;
+  color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+section{padding:56px 0}
+h1,h2,h3{line-height:1.15;margin:0}
+h1{font-size:clamp(2.2rem,6.5vw,3.8rem);letter-spacing:-.02em;max-width:18ch}
+h2{font-size:clamp(1.5rem,3.5vw,2rem);letter-spacing:-.01em;margin-bottom:24px}
+h3{font-size:1.05rem;margin-bottom:10px}
+p{margin:0 0 14px;max-width:62ch}
+.muted{color:var(--muted)}
+header.bar{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.logo{font-weight:700;text-decoration:none}
+.theme{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font:inherit;font-size:.9rem;cursor:pointer}
+.hero{padding-top:32px}
+.hero p.lead{font-size:1.2rem;margin-top:20px;color:var(--muted)}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{display:inline-block;padding:13px 22px;border-radius:12px;font-weight:600;text-decoration:none;border:1px solid var(--line);background:var(--surface)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn:hover{border-color:var(--accent)}
+.facts{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:28px;font-size:.95rem;color:var(--muted)}
+/* the funnel: the one memorable element */
+.flow-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px}
+.flow-card h2{margin-bottom:6px}
+.flow{list-style:none;margin:24px 0 0;padding:0;display:flex;flex-direction:column;gap:0}
+.flow li{position:relative;display:flex;gap:14px;align-items:flex-start;padding:0 0 22px 0}
+.flow li::before{content:"";position:absolute;left:15px;top:32px;bottom:2px;width:2px;background:var(--line)}
+.flow li:last-child{padding-bottom:0}
+.flow li:last-child::before{display:none}
+.dot{flex:none;width:32px;height:32px;border-radius:50%;background:var(--chip);border:2px solid var(--accent);display:grid;place-items:center;font-size:.9rem;font-weight:700;color:var(--accent)}
+.flow li.done .dot{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.flow b{display:block}
+.flow span{color:var(--muted);font-size:.95rem}
+@media (min-width:760px){
+  .flow{flex-direction:row;gap:12px}
+  .flow li{flex:1;flex-direction:column;padding:0}
+  .flow li::before{left:44px;right:-12px;top:15px;bottom:auto;width:auto;height:2px}
+}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
+.card ul{margin:0;padding-left:18px;color:var(--muted);font-size:.97rem}
+.card li{margin-bottom:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.chips li{background:var(--chip);padding:6px 14px;border-radius:999px;font-size:.92rem}
+.job{border-left:3px solid var(--accent);padding-left:18px;margin-bottom:28px}
+.job .when{color:var(--muted);font-size:.92rem}
+.job ul{padding-left:18px;margin:10px 0 0;color:var(--muted)}
+.job li{margin-bottom:4px}
+.cta{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:32px 24px}
+.cases{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.case{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px}
+.case.big{grid-column:1/-1}
+.case .tools{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px;padding:0;list-style:none}
+.case .tools li{background:var(--chip);color:var(--accent);padding:3px 10px;border-radius:999px;font-size:.82rem;font-weight:600}
+.case p{font-size:.97rem}
+.case ul.done{margin:0 0 14px;padding-left:18px;color:var(--muted);font-size:.95rem}
+.case ul.done li{margin-bottom:5px}
+.case .res{margin-top:auto;padding:12px 14px;border-radius:10px;background:var(--ok-bg);color:var(--ink);font-size:.93rem}
+.case .more{display:inline-block;margin-top:12px;font-size:.92rem;font-weight:600;color:var(--accent)}
+.case .nums{display:flex;flex-wrap:wrap;gap:8px 24px;margin:0 0 14px;font-size:.93rem}
+.case .nums b{font-size:1.25rem;margin-right:4px}
+footer{padding:32px 0 48px;color:var(--muted);font-size:.9rem}
+:root{--bg:#eceeff;--surface:#ffffff;--ink:#16123a;--muted:#4b4872;--line:#16123a;--accent:#5b3df5;--accent-ink:#ffffff;--ok:#0a7d5a;--ok-bg:#c9f5e3;--chip:#ffe27a;--pop:#ff6b5b;--shadow:#16123a;--dot:#c6cbf6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12102b;--surface:#1d1a45;--ink:#f3f1ff;--muted:#b9b5e2;--line:#f3f1ff;--accent:#8f7bff;--accent-ink:#12102b;--ok:#5eeab8;--ok-bg:#12423a;--chip:#3a3380;--pop:#ff8a7c;--shadow:#8f7bff;--dot:#2a2660}}
+:root[data-theme="dark"]{--bg:#12102b;--surface:#1d1a45;--ink:#f3f1ff;--muted:#b9b5e2;--line:#f3f1ff;--accent:#8f7bff;--accent-ink:#12102b;--ok:#5eeab8;--ok-bg:#12423a;--chip:#3a3380;--pop:#ff8a7c;--shadow:#8f7bff;--dot:#2a2660}
+body{font-family:Onest,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background-color:var(--bg);background-image:radial-gradient(var(--dot) 1.6px,transparent 1.6px);background-size:24px 24px}
+.wrap{max-width:1040px}
+h1,h2{font-family:Unbounded,Onest,system-ui,sans-serif;font-weight:800}
+h1{font-size:clamp(1.9rem,4.8vw,3.3rem);line-height:1.12;letter-spacing:-.02em;max-width:17ch}
+h2{font-size:clamp(1.3rem,3vw,1.75rem);display:flex;align-items:center;gap:.5em}
+h2::before{content:"";flex:none;width:.6em;height:.6em;background:var(--pop);border:2px solid var(--ink);border-radius:50%}
+.card,.cta,.flow-card,.case,.theme{border:2px solid var(--ink);box-shadow:5px 5px 0 var(--shadow)}
+.flow-card,.cta{box-shadow:7px 7px 0 var(--shadow);border-radius:20px}
+.theme{box-shadow:3px 3px 0 var(--shadow);font-weight:700}
+.btn{border:2px solid var(--ink);box-shadow:4px 4px 0 var(--shadow);transition:transform .12s,box-shadow .12s}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--shadow);border-color:var(--ink)}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--shadow)}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.facts span{background:var(--surface);border:2px solid var(--ink);border-radius:999px;padding:2px 12px;color:var(--ink);font-weight:600}
+.case{border-top-width:12px;border-top-color:var(--c,var(--accent));transition:transform .15s,box-shadow .15s}
+.case:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--shadow)}
+.case:nth-child(4n+2){--c:var(--pop)}
+.case:nth-child(4n+3){--c:#ffc933}
+.case:nth-child(4n+4){--c:#19c28a}
+.case .tools li,.chips li{background:var(--chip);color:var(--ink);border:2px solid var(--ink);font-weight:700}
+.case .res{border:2px dashed var(--ink);background:var(--ok-bg)}
+.case .more{color:var(--ink);text-decoration-color:var(--pop);text-decoration-thickness:3px;text-underline-offset:4px}
+.dot{width:36px;height:36px;border:2px solid var(--ink);background:#ffc933;color:#16123a}
+.flow li.done .dot{background:var(--ok-bg);color:var(--ok)}
+.flow li::before{left:17px;top:36px;opacity:.4}
+@media (min-width:760px){.flow li::before{left:48px;top:17px}}
+.job{border-left:4px solid var(--pop)}
+.chat{background:var(--surface);border:2px solid var(--ink);border-radius:22px;box-shadow:8px 8px 0 var(--shadow);overflow:hidden;margin-top:36px}
+.chat-head{display:flex;gap:10px;align-items:center;padding:12px 16px;background:var(--accent);color:var(--accent-ink);font-weight:700}
+.chat-head i{font-style:normal;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#ffc933;border:2px solid var(--ink)}
+.chat-head small{display:block;font-weight:400;opacity:.85}
+.chat-body{padding:16px;display:flex;flex-direction:column;gap:10px;min-height:270px}
+.msg{max-width:86%;padding:10px 14px;border:2px solid var(--ink);border-radius:16px;font-size:.95rem;line-height:1.4;opacity:0;transform:translateY(10px);animation:pop .45s forwards}
+.msg.bot{background:var(--chip);color:var(--ink);align-self:flex-start;border-bottom-left-radius:4px}
+.msg.me{background:var(--accent);color:var(--accent-ink);align-self:flex-end;border-bottom-right-radius:4px}
+.msg:nth-child(1){animation-delay:.5s}.msg:nth-child(2){animation-delay:1.7s}.msg:nth-child(3){animation-delay:2.8s}.msg:nth-child(4){animation-delay:4.3s}
+.msg .fake{display:block;margin-top:8px;padding:6px 12px;border:2px solid var(--ink);border-radius:10px;background:var(--surface);color:var(--ink);font-weight:700;text-align:center}
+.chat-foot{padding:10px 16px;border-top:2px solid var(--ink);font-size:.85rem;color:var(--muted)}
+@keyframes pop{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.msg{animation:none;opacity:1;transform:none}.btn,.case{transition:none}}
+@media (min-width:900px){.hero{display:grid;grid-template-columns:1.15fr .85fr;column-gap:48px;align-items:start}.hero>*{grid-column:1}.hero>.chat{grid-column:2;grid-row:1/6;margin-top:8px}}
+
+/* calmer, more refined pass */
+.card,.cta,.flow-card,.case,.theme{border-width:1.5px;box-shadow:0 1px 0 var(--shadow),0 12px 28px -18px var(--shadow)}
+.flow-card,.cta{box-shadow:0 1px 0 var(--shadow),0 18px 40px -24px var(--shadow)}
+.chat{border-width:1.5px;box-shadow:0 1px 0 var(--shadow),0 24px 48px -28px var(--shadow)}
+.btn{border-width:1.5px;box-shadow:none}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 20px -12px var(--shadow)}
+.btn:active{transform:none}
+.case,.case:nth-child(n){--c:var(--accent)}
+.case{border-top-width:4px}
+.case:hover{transform:translateY(-3px);box-shadow:0 1px 0 var(--shadow),0 18px 36px -20px var(--shadow)}
+.case .res{border:1.5px solid var(--line);background:var(--ok-bg)}
+.case .tools li,.chips li{border-width:1.5px;font-weight:600;background:var(--chip)}
+h2::before{display:none}
+.facts span{border-width:1.5px}
+.msg,.msg .fake,.chat-head i,.chat-foot{border-width:1.5px}
+.dot{border-width:1.5px}
+body{background-image:radial-gradient(var(--dot) 1px,transparent 1px);background-size:28px 28px}
+:root{--chip:#e4e1ff;--dot:#d3d6f5}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--chip:#2c2766;--dot:#221f52}}
+:root[data-theme="dark"]{--chip:#2c2766;--dot:#221f52}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <a class="logo" href="#top">Варвара Алексеева</a>
+    <button class="theme" id="theme" type="button" aria-label="Переключить тему">Тема</button>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <h1>Настраиваю онлайн-школы так, чтобы всё работало само</h1>
+      <p class="lead">Я технический специалист по GetCourse и чат-ботам. Собираю воронки, оплату, рассылки и интеграции: от первого сообщения клиента до доступа к продукту.</p>
+      <div class="btns">
+        <a class="btn primary" href="https://t.me/varyaalekss" target="_blank" rel="noopener">Написать в Telegram</a>
+        <a class="btn" href="https://t.me/varyaaleksstehspec/2" target="_blank" rel="noopener">Смотреть кейсы в канале</a>
+      </div>
+      <div class="facts">
+        <span>Пермь, МСК+2</span>
+        <span>GetCourse</span>
+        <span>Salebot</span>
+        <span>ChatPlace</span>
+        <span>BotHelp</span>
+      </div>
+      <div class="chat" aria-label="Пример диалога с ботом">
+        <div class="chat-head"><i>🤖</i><div>Бот для воронки<small>онлайн</small></div></div>
+        <div class="chat-body">
+          <div class="msg bot">Привет! Напиши кодовое слово, и я пришлю гайд 🎁</div>
+          <div class="msg me">Чат</div>
+          <div class="msg bot">Проверяю подписку…</div>
+          <div class="msg bot">Готово ✅ Материал ждёт тебя<span class="fake">Забрать гайд</span></div>
+        </div>
+        <div class="chat-foot">Так работают мои воронки: кодовое слово, проверка подписки, выдача материала.</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="flow-card">
+        <h2>Воронка, которую я собираю под ключ</h2>
+        <p class="muted">Так выглядит типовая цепочка из моей практики. Каждый шаг я настраиваю и проверяю сама.</p>
+        <ol class="flow">
+          <li><span class="dot">1</span><div><b>Instagram</b><span>Кодовое слово в комментарии или директе</span></div></li>
+          <li><span class="dot">2</span><div><b>Проверка подписки</b><span>Бот убеждается, что человек подписан</span></div></li>
+          <li><span class="dot">3</span><div><b>Telegram-бот</b><span>Тест, валидация данных, подсчёт результата</span></div></li>
+          <li><span class="dot">4</span><div><b>Лид-магнит</b><span>Автоматическая выдача материала</span></div></li>
+          <li><span class="dot">5</span><div><b>GetCourse и таблицы</b><span>Данные в системе, Google Таблицах и статистике</span></div></li>
+          <li class="done"><span class="dot">✓</span><div><b>Оплата и доступ</b><span>Продукт, промокод, открытый доступ</span></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="cases">
+      <h2>Кейсы</h2>
+      <p class="muted">Реальные проекты из моего портфолио. В каждом посте канала есть скриншоты настроек.</p>
+      <div class="cases">
+        <article class="case big">
+          <ul class="tools"><li>GetCourse</li><li>Tilda</li><li>Telegram</li></ul>
+          <h3>Продажи курса «Woman Code» под ключ</h3>
+          <p><b>Задача.</b> Собрать техническую часть продаж потока: тарифы, предоплату, оплату, письма, VIP-доступ и смену цены по дате.</p>
+          <div class="nums"><span><b>3</b>тарифа</span><span><b>1</b>бот-контроллер для VIP-чата</span><span><b>8 → 9</b>число: цена меняется сама</span></div>
+          <ul class="done">
+            <li>Для каждого тарифа настроены цена, предоплата, срок доступа и форма оплаты на Tilda.</li>
+            <li>Процесс сам удаляет неоплаченные дубли заказов, если есть оплаченный.</li>
+            <li>Письма уходят после полной оплаты, предоплаты и при неоплаченном заказе.</li>
+            <li>Бот проверяет оплату и сам открывает доступ в закрытый чат VIP-тарифа.</li>
+          </ul>
+          <div class="res"><b>Результат.</b> Весь цикл от выбора тарифа до доступа идёт без ручных операций, а команде не нужно следить за ценой и дублями.</div>
+          <a class="more" href="https://t.me/varyaaleksstehspec/63" target="_blank" rel="noopener">Читать кейс со скриншотами в Telegram</a>
+        </article>
+
+        <article class="case">
+          <ul class="tools"><li>Salebot</li><li>GetCourse</li><li>Instagram</li></ul>
+          <h3>Прогревающая воронка со статистикой и конверсиями</h3>
+          <p><b>Задача.</b> Довести человека из Instagram через бесплатный урок до покупки марафона и видеть цифры по каждому этапу.</p>
+          <ul class="done">
+            <li>Переход из Instagram в бот по кодовому слову, проверка клика по уроку.</li>
+            <li>Интеграция Salebot и GetCourse: бот знает о заказе и оплате.</li>
+            <li>Команда «Статистика» показывает 6 этапов воронки и считает конверсии между ними.</li>
+            <li>После оплаты продающая цепочка для человека останавливается.</li>
+          </ul>
+          <div class="res"><b>Результат.</b> От подписчика до оплаты воронка работает сама, а владелец видит, где теряются люди.</div>
+          <a class="more" href="https://t.me/varyaaleksstehspec/78" target="_blank" rel="noopener">Читать кейс в Telegram</a>
+        </article>
+
+        <article class="case">
+          <ul class="tools"><li>Salebot</li><li>Переменные</li><li>Условия</li></ul>
+          <h3>Квиз на 20 вопросов с 16 вариантами результата</h3>
+          <p><b>Задача.</b> Бот должен сам посчитать ответы и выдать человеку персональный итог.</p>
+          <div class="nums"><span><b>20</b>вопросов</span><span><b>4</b>категории</span><span><b>16</b>результатов</span></div>
+          <ul class="done">
+            <li>Баллы копятся в четырёх переменных, итог зависит от их сочетания.</li>
+            <li>Тем, кто бросил тест, приходят напоминания вернуться.</li>
+            <li>После результата человек получает подходящее предложение.</li>
+          </ul>
+          <div class="res"><b>Результат.</b> Диагностика проходит без ручной обработки, а незавершённые прохождения возвращаются.</div>
+          <a class="more" href="https://t.me/varyaaleksstehspec/92" target="_blank" rel="noopener">Читать кейс в Telegram</a>
+        </article>
+
+        <article class="case">
+          <ul class="tools"><li>GetCourse</li><li>Тесты</li><li>Процессы</li></ul>
+          <h3>Обучающий тренинг с автоматической выдачей диплома</h3>
+          <p><b>Задача.</b> Собрать структуру курса, проверку знаний и дипломы без ручной работы куратора.</p>
+          <ul class="done">
+            <li>5 модулей, уроки открываются последовательно, оформление единое.</li>
+            <li>Тест из 9 вопросов с баллами и пересдачей; домашнее задание доступно только после теста.</li>
+            <li>Диплом выдаётся сам: курс оплачен полностью, первый модуль пройден, прошёл месяц.</li>
+          </ul>
+          <div class="res"><b>Результат.</b> Проверка заданий и выдача дипломов идут автоматически, ученик видит понятный маршрут.</div>
+          <a class="more" href="https://t.me/varyaaleksstehspec/70" target="_blank" rel="noopener">Читать кейс в Telegram</a>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Что я умею</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>GetCourse</h3>
+          <ul>
+            <li>Домен, почта, Postmaster и FBL</li>
+            <li>Платёжные системы и страницы оплаты</li>
+            <li>Продукты, предложения, промокоды, скидки</li>
+            <li>Процессы, автоматизации, сегменты, рассылки</li>
+            <li>Доступы, анкеты, тесты, формы</li>
+            <li>Вебинары, посещаемость, дашборды</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Salebot</h3>
+          <ul>
+            <li>Чат-боты и воронки в Telegram, Instagram, VK</li>
+            <li>Тесты с подсчётом результата</li>
+            <li>Выдача лид-магнитов и проверка подписки</li>
+            <li>Интеграции: GetCourse, Google Таблицы, Prodamus</li>
+            <li>Переменные, логика, аналитика по этапам</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>ChatPlace и BotHelp</h3>
+          <ul>
+            <li>Воронки в Instagram и Telegram</li>
+            <li>Запуск по кодовым словам</li>
+            <li>Автосообщения и отслеживание действий</li>
+            <li>Сценарии для подписчиков в BotHelp</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Дополнительно</h3>
+          <ul>
+            <li>Лендинги на Tilda</li>
+            <li>Верстка писем в GetCourse</li>
+            <li>Монтаж записей вебинаров</li>
+            <li>Выгрузка и обработка данных в XLSX</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Опыт</h2>
+      <div class="job">
+        <h3>Онлайн-школа Александры Перфильевой</h3>
+        <div class="when">Стажировка, август 2026</div>
+        <ul>
+          <li>Создавала продукты, предложения, виджеты и страницы оплаты, промокоды и промоакции.</li>
+          <li>Настраивала автоматизации в GetCourse и обработку заказов, продлевала доступы.</li>
+          <li>Интегрировала GetCourse и Salebot, настроила передачу данных в Google Таблицы.</li>
+          <li>Собрала Instagram-воронку с проверкой подписки и переходом в Telegram-бот.</li>
+          <li>Сделала Telegram-воронку с лид-магнитом и валидацией данных, а также чат-бот с тестом.</li>
+          <li>Настроила статистику по этапам воронки, рассылки в Salebot и верстку писем.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Обучение</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Курс «Технический специалист»</h3>
+          <p class="muted">Онлайн-школа «ТехноПрофи» Ольги Рыжовой, июнь–сентябрь 2026. Сертификат № 1919 от 16.10.2026.</p>
+          <ul class="chips" style="margin-top:12px"><li>GetCourse</li><li>Salebot</li><li>Вебинары</li><li>Интеграции</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Как я работаю</h2>
+      <p>Люблю разбираться в логике процессов и находить понятные решения. Внимательна к деталям, спокойно осваиваю новые инструменты и сразу применяю знания на практике. Задачи довожу до результата и открыто обсуждаю замечания.</p>
+    </section>
+
+    <section>
+      <div class="cta">
+        <h2>Есть задача по GetCourse или воронке?</h2>
+        <p class="muted">Опишите её в Telegram: отвечу, что и как можно настроить. Примеры работ собраны в канале.</p>
+        <div class="btns">
+          <a class="btn primary" href="https://t.me/varyaalekss" target="_blank" rel="noopener">@varyaalekss</a>
+          <a class="btn" href="mailto:varyaa.alekseeva.2007@gmail.com">varyaa.alekseeva.2007@gmail.com</a>
+          <a class="btn" href="https://t.me/varyaaleksstehspec/2" target="_blank" rel="noopener">Канал с кейсами</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2026 Варвара Алексеева · Пермь, МСК+2 (UTC+5)</footer>
+</div>
+<script>
+(function(){
+  var root=document.documentElement,btn=document.getElementById('theme');
+  try{var s=localStorage.getItem('theme');if(s)root.setAttribute('data-theme',s);}catch(e){}
+  btn.addEventListener('click',function(){
+    var dark=root.getAttribute('data-theme')==='dark'||(!root.getAttribute('data-theme')&&matchMedia('(prefers-color-scheme: dark)').matches);
+    var next=dark?'light':'dark';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem('theme',next);}catch(e){}
+  });
+})();
+</script>
+</body>
+</html>
